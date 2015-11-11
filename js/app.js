@@ -11,6 +11,11 @@ function startTimer(duration, display) {
 
         display.textContent = minutes + ":" + seconds /* + ":" + milliseconds */ ;
 
+        // document.getElementsByClassName("hint").style.display = "block";
+
+        // if (--timer <= 12) {
+        //     document.body.querySelector(".hint").hide();
+        // } else 
         if (--timer < 0) {
         	alert("DONE");
             timer = duration;
@@ -21,7 +26,7 @@ function startTimer(duration, display) {
 }
 
 window.onload = function () {
-    var fiveMinutes = 60 * 5;
+    var fiveMinutes = 60 * 15;
         display = document.querySelector('#timerDiv');
     document.querySelector('button').addEventListener('click', function () {
     	startTimer(fiveMinutes, display);
