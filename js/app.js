@@ -1,11 +1,13 @@
 // Global Variables //
 var defuseCode  = null;
-var cutRed      = null;
-var cutGreen    = null;
-var cutBlue     = null;
-var cutYellow   = null;
-var ejectPower  = null;
-
+var cutRed      = false; // For the boolean value questions, when making reset function
+var cutGreen    = false; // make sure to reset the variables to false.
+var cutBlue     = false;
+var cutYellow   = false;
+var ejectPower  = false;
+var codeQuery   = null;
+var wireQuery   = null;
+var powerQuery  = null;
 
 // Application //
 function startTimer(duration, display) {
@@ -44,15 +46,17 @@ window.onload = function() {
     setPower();
 
     // Set the Question Objects
-    var codeQuery = mkdefuseQuery("Four Digit Code", "What is the 4 digit code?", defuseCode);
+    codeQuery = mkdefuseQuery("Four Digit Code", "What is the 4 digit code?", defuseCode);
         // console.log(codeQuery);
-    var wireQuery = mkdefuseQuery("Wires", "Which wires do you need to cut?", [cutRed, cutGreen, cutBlue, cutYellow]);
+    wireQuery = mkdefuseQuery("Wires", "Which wires do you need to cut?", [cutRed, cutGreen, cutBlue, cutYellow]);
         // console.log(wireQuery);
-    var powerQuery = mkdefuseQuery("Power Source", "Do you need to remove the power source?", ejectPower);
+    powerQuery = mkdefuseQuery("Power Source", "Do you need to remove the power source?", ejectPower);
         // console.log(powerQuery);
 
-    // Set hints -- broken; can't call items?
-    // document.getElementById('hintCode').innerHtml = "<p>" + codeQuery.items + "</p>";
+    // Set hints
+    document.getElementById('hintCode').firstElementChild.innerHTML  = codeQuery.items;
+    document.getElementById('hintWire').firstElementChild.innerHTML  = wireQuery.items;
+    document.getElementById('hintPower').firstElementChild.innerHTML = powerQuery.items;
 
     // Set the timer for 30 Seconds
     var thirtySeconds = 60 * 30;
@@ -121,56 +125,54 @@ function setCode(min, max) {
 
 // Wire Boolean Value Generator
 function setWires() {
-    // Set wire color variables, randomly generate values 1-10
-    cutRed    = Math.floor((Math.random() * 10) + 1);
-    cutGreen  = Math.floor((Math.random() * 10) + 1);
-    cutBlue   = Math.floor((Math.random() * 10) + 1);
-    cutYellow = Math.floor((Math.random() * 10) + 1);
+    // Set wire color variables, randomly generate values 0-1
+    var tempRed    = randomSmallNum();
+    var tempGreen  = randomSmallNum();
+    var tempBlue   = randomSmallNum();
+    var tempYellow = randomSmallNum();
 
     // Translate cutRed to Boolean
-    if (cutRed <= 5) {
+    if (tempRed) {
         cutRed = true;
-    } else {
-        cutRed = false;
-    };
+    }
 
     // Translate cutGreen to Boolean
-    if (cutGreen <= 5) {
+    if (tempGreen) {
         cutGreen = true;
-    } else {
-        cutGreen = false;
-    };
+    }
 
     // Translate cutBlue to Boolean
-    if (cutBlue <= 5) {
+    if (tempBlue) {
         cutBlue = true;
-    } else {
-        cutBlue = false;
-    };
+    }
 
     // Translate cutYellow to Boolean
-    if (cutYellow <= 5) {
+    if (tempYellow) {
         cutYellow = true;
-    } else {
-        cutYellow = false;
-    };
+    }
 
     // Check to make sure it's working!
-    // console.log(cutRed, cutGreen, cutBlue, cutYellow);
+    console.log(cutRed, cutGreen, cutBlue, cutYellow);
 };
 
 // Power Source Boolean Value Generator
 function setPower() {
-    ejectPower = Math.floor((Math.random() * 10) + 1);
+    // Set yes/no eject power variable
+    var tempPower = randomSmallNum();
 
-    if (ejectPower <= 5) {
+    // Translate ejectPower to Boolean
+    if (tempPower) {
         ejectPower = true;
-    } else {
-        ejectPower = false;
-    };
+    }
+
+    // Check to make sure it's working!
+    console.log(ejectPower);
 };
 
-
+// Small Number Generator
+function randomSmallNum() {
+    return Math.floor(Math.random() * 2);
+}
 
 // Defunct Parts And Things That Worked But Weren't What I Needed //
 /*
