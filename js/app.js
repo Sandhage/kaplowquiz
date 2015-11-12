@@ -26,7 +26,7 @@ function startTimer(duration, display) {
 
         if (--timer < 0) {
         	alert("DONE");
-            // hideQuestion();
+            hideQuestion();
             timer = duration;
             clearInterval(interval);
         }

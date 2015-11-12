@@ -93,7 +93,7 @@ section {
 	margin-top: 3rem;
 	margin-right: auto;
 	margin-left: auto;
-	padding-top: 2rem;
+	padding-top: 0.25rem;
 	border-radius: 7px;
 	/* Font and Color */
 	font-family: 'Iceland', cursive;
@@ -103,7 +103,7 @@ section {
 	display: none;
 }
 .defuse-section h2 {
-	margin-left: 3rem;
+	margin-left: 2rem;
 }
 .defuse-section .answer {
 	/* Layout and Design */
