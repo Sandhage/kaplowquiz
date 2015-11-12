@@ -1,4 +1,4 @@
-// Global Variables
+// Global Variables //
 var defuseCode  = null;
 var cutRed      = null;
 var cutGreen    = null;
@@ -7,26 +7,26 @@ var cutYellow   = null;
 var ejectPower  = null;
 
 
-// Application
+// Application //
 function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
     var interval = setInterval(function () {
-        minutes      = parseInt(timer / 60, 10);
-        seconds      = parseInt(timer % 60, 10);
+        minutes  = parseInt(timer / 60, 10);
+        seconds  = parseInt(timer % 60, 10);
 
-        minutes      = minutes < 10 ? "0" + minutes : minutes;
-        seconds      = seconds < 10 ? "0" + seconds : seconds;
+        minutes  = minutes < 10 ? "0" + minutes : minutes;
+        seconds  = seconds < 10 ? "0" + seconds : seconds;
 
         display.textContent = minutes + ":" + seconds;
 
-        if (minutes == 27 && seconds == 0) {
+        if (minutes == 26 && seconds == 0) {
             hideHints();
-            console.log('Hide RIGHT NOW');
             showQuestion();
         }
 
         if (--timer < 0) {
         	alert("DONE");
+            // hideQuestion();
             timer = duration;
             clearInterval(interval);
         }
@@ -34,38 +34,46 @@ function startTimer(duration, display) {
 }
 
 window.onload = function() {
-    // Set the timer for 30 seconds
-    var thirtySeconds = 60 * 30;
-        display = document.querySelector('#timerDiv');
-    document.querySelector('button').addEventListener('click', function () {
-    	startTimer(thirtySeconds, display);
-        showHints();
-    });
-
     // Set the 4-digit defusal code
     setCode(0, 9999);
 
-    // Set Wires
+    // Set wires
     setWires();
 
-    // Set Power Source
+    // Set power source
     setPower();
 
-    // Set the question objects
+    // Set the Question Objects
     var codeQuery = mkdefuseQuery("Four Digit Code", "What is the 4 digit code?", defuseCode);
-    console.log(codeQuery);
+        // console.log(codeQuery);
     var wireQuery = mkdefuseQuery("Wires", "Which wires do you need to cut?", [cutRed, cutGreen, cutBlue, cutYellow]);
-    console.log(wireQuery);
+        // console.log(wireQuery);
     var powerQuery = mkdefuseQuery("Power Source", "Do you need to remove the power source?", ejectPower);
-    console.log(powerQuery);
+        // console.log(powerQuery);
+
+    // Set hints -- broken; can't call items?
+    // document.getElementById('hintCode').innerHtml = "<p>" + codeQuery.items + "</p>";
+
+    // Set the timer for 30 Seconds
+    var thirtySeconds = 60 * 30;
+        display = document.querySelector('#timerDiv');
+
+    // Start timer and quiz
+    document.querySelector('button').addEventListener('click', function () {
+        startTimer(thirtySeconds, display);
+        showHints();
+    });
+
+    // Pull questions to container -- will eventually be moved timer/answer
+
 
 };
 
 
 
-// Global Functions
+// Global Functions //
 
-// Show/Hide functions
+// Show/hide functions
 function showHints() {
     document.getElementById('hintSect').style.display = "block";
 };
@@ -82,14 +90,15 @@ function hideQuestion() {
     document.getElementById('defuseSect').style.display = "none";
 };
 
-// Make "defusalQuery" (AKA Question) Objects
+// Make "defusalQuery" (AKA Question) objects
 function mkdefuseQuery(type, query, items) {
     var defuseQuery = {};
 
-    defuseQuery.type    = type;
-    defuseQuery.query   = query;
-    defuseQuery.items   = items;
-    defuseQuery.guess   = '';
+    defuseQuery.type       = type;
+    defuseQuery.query      = query;
+    defuseQuery.items      = items;
+    defuseQuery.guess      = null;
+    defuseQuery.answered   = 0;
 
     return defuseQuery;
 
@@ -161,8 +170,10 @@ function setPower() {
     };
 };
 
-/* Defunct Parts And Things That Worked But Weren't What I Needed
 
+
+// Defunct Parts And Things That Worked But Weren't What I Needed //
+/*
 Originally, this selected an array of class items and edited their display properties through a loop:
 
     var elements = new Array();
@@ -177,5 +188,4 @@ Originally, this selected an array of class items and edited their display prope
             elements[i].style.display = "none";
         };
     };
-
 */
