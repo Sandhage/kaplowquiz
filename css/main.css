@@ -5,8 +5,15 @@
 
 /* Universal Declarations */
 body {
-	background-color: #1C1E21;
+	background-color: #06111D;
 }
+div {
+	box-sizing: border-box;
+}
+section {
+	box-sizing: border-box;
+}
+
 
 /* Timer Declarations */
 .timer-section {
@@ -26,13 +33,12 @@ body {
 }
 .timer-container {
 	/* Layout and Design */
-	box-sizing: border-box;
 	width: 500px;
 	height: 300px;
 	margin-left: auto;
 	padding-top: 2.5rem;
 	border-radius: 7px 0px 7px 7px;
-	border: 1px solid steelblue;
+	border: 1px solid #1C1E21;
 	/* Font and Color */
 	font-family: 'Iceland', cursive;
 	font-size: 12.5rem;
@@ -53,8 +59,9 @@ body {
 	margin-top: 3rem;
 	margin-right: auto;
 	margin-left: auto;
-	border: 1px solid steelblue;
 	border-radius: 7px;
+	/* Font and Color */
+	background-color: #1C1E21;	
 	/* Hidden */
 	display: none;
 }
@@ -65,7 +72,7 @@ body {
 	flex-wrap: wrap;
 	justify-content: space-between;
 	padding-right: 8rem;
-	padding-left: 8rem
+	padding-left: 8rem;
 }
 .hint {
 	/* Layout and Design */
@@ -86,20 +93,24 @@ body {
 	margin-top: 3rem;
 	margin-right: auto;
 	margin-left: auto;
-	border: 1px solid steelblue;
+	padding-top: 2rem;
 	border-radius: 7px;
 	/* Font and Color */
 	font-family: 'Iceland', cursive;
 	color: #7ee517;
+	background-color: #1C1E21;
 	/* Hidden */
 	display: none;
+}
+.defuse-section h2 {
+	margin-left: 3rem;
 }
 .defuse-section .answer {
 	/* Layout and Design */
 	width: 10rem;
 	height: 1.5rem;
 	margin-top: 3rem;
-	margin-left: 3rem;
+	margin-left: 6rem;
 	border-radius: 7px;
 	/* Font and Color */
 	text-align: justify;
