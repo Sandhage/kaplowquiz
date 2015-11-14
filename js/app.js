@@ -1,13 +1,14 @@
 // Global Variables //
-var defuseCode  = null;
-var cutRed      = false; // For the boolean value questions, when making reset function
-var cutGreen    = false; // make sure to reset the variables to false.
-var cutBlue     = false;
-var cutYellow   = false;
-var ejectPower  = false;
-var codeQuery   = null;
-var wireQuery   = null;
-var powerQuery  = null;
+var defuseCode      = null;
+var cutRed          = false; // For the boolean value questions, when making reset function
+var cutGreen        = false; // make sure to reset the variables to false.
+var cutBlue         = false;
+var cutYellow       = false;
+var ejectPower      = false;
+var codeQuery       = null;
+var wireQuery       = null;
+var powerQuery      = null;
+var currentQuestion = null;
 
 // Application //
 function startTimer(duration, display) {
@@ -21,14 +22,27 @@ function startTimer(duration, display) {
 
         display.textContent = minutes + ":" + seconds;
 
-        if (minutes == 26 && seconds == 0) {
+        if (minutes == 24 && seconds == 0) {
             hideHints();
+            setQuestion(wireQuery);
             showQuestion();
         }
 
+        if (minutes == 18 && seconds == 0) {
+            setQuestion(codeQuery);
+        }
+
+        if (minutes == 12 && seconds == 0) {
+            setQuestion(powerQuery);
+        }
+
+        // if (minutes == 6 && seconds == 0) {
+        //     setQuestion();
+        // }
+
         if (--timer < 0) {
-        	alert("DONE");
-            hideQuestion();
+        	alert("DONE"); 
+           hideQuestion();
             timer = duration;
             clearInterval(interval);
         }
@@ -36,31 +50,18 @@ function startTimer(duration, display) {
 }
 
 window.onload = function() {
-    // Set the 4-digit defusal code
-    setCode(0, 9999);
-
-    // Set wires
-    setWires();
-
-    // Set power source
-    setPower();
+    // Set all defusal variables (Code, Wire, Powersource)
+    resetDefusal();
 
     // Set the Question Objects
-    codeQuery = mkdefuseQuery("Four Digit Code", "What is the 4 digit code?", defuseCode);
-        // console.log(codeQuery);
-    wireQuery = mkdefuseQuery("Wires", "Which wires do you need to cut?", [cutRed, cutGreen, cutBlue, cutYellow]);
-        // console.log(wireQuery);
-    powerQuery = mkdefuseQuery("Power Source", "Do you need to remove the power source?", ejectPower);
-        // console.log(powerQuery);
+    setdefuseQueries();
 
-    // Set hints
-    document.getElementById('hintCode').firstElementChild.innerHTML  = codeQuery.items;
-    document.getElementById('hintWire').firstElementChild.innerHTML  = wireQuery.items;
-    document.getElementById('hintPower').firstElementChild.innerHTML = powerQuery.items;
+    // Set All Defusal Hints
+    setHints();
 
     // Set the timer for 30 Seconds
     var thirtySeconds = 60 * 30;
-        display = document.querySelector('#timerDiv');
+    display = document.querySelector('#timerDiv');
 
     // Start timer and quiz
     document.querySelector('button').addEventListener('click', function () {
@@ -108,6 +109,16 @@ function mkdefuseQuery(type, query, items) {
 
 };
 
+// Set All "defusalQuery" (AKA Question) objects
+function setdefuseQueries() {
+    codeQuery = mkdefuseQuery("Four Digit Code", "What is the 4 digit code?", defuseCode);
+        // console.log(codeQuery);
+    wireQuery = mkdefuseQuery("Wires", "Which wires do you need to cut?", [cutRed, cutGreen, cutBlue, cutYellow]);
+        // console.log(wireQuery);
+    powerQuery = mkdefuseQuery("Power Source", "Do you need to remove the power source?", ejectPower);
+        // console.log(powerQuery);
+};
+
 // 4-digit Defusal Code Generator
 function setCode(min, max) {
     // Randomly generate a number between two digits ex: (0, 9999)
@@ -152,7 +163,7 @@ function setWires() {
     }
 
     // Check to make sure it's working!
-    console.log(cutRed, cutGreen, cutBlue, cutYellow);
+    // console.log(cutRed, cutGreen, cutBlue, cutYellow);
 };
 
 // Power Source Boolean Value Generator
@@ -172,7 +183,49 @@ function setPower() {
 // Small Number Generator
 function randomSmallNum() {
     return Math.floor(Math.random() * 2);
+};
+
+// Reset All Answer Variables
+function resetDefusal() {
+    // Set the 4-digit defusal code
+    setCode(0, 9999);
+
+    // Set wires
+    setWires();
+
+    // Set power source
+    setPower();
+};
+
+// Set All Defuse Hints
+function setHints() {
+    document.getElementById('hintCode').firstElementChild.innerHTML  = codeQuery.items;
+    document.getElementById('hintWire').firstElementChild.innerHTML  = wireQuery.items;
+    document.getElementById('hintPower').firstElementChild.innerHTML = powerQuery.items;
+};
+
+// Set Current Defusal Question
+function setQuestion(queryObject) {
+    document.getElementById('defuseSect').firstElementChild.innerHTML = queryObject.query;
 }
+
+
+// Pass Phrase Generator
+/*
+var words  = ["spooky", "tired", "gnarly", "mystery", "brave"];
+var words2 = ["ghost", "archer", "mister", "monkey", "sick"];
+var words3 = ["devil", "arrow", "explosion", "proceed", "sleeps"];
+
+var getRandomPhrase = function () {
+    return words[Math.floor(Math.random() * words.length)] + " " + words2[Math.floor(Math.random() * words2.length)] + " " + words3[Math.floor(Math.random() * words3.length)];
+};
+
+var phrase = getRandomPhrase();
+
+console.log(phrase);
+
+document.getElementById("phrase").textContent = phrase;
+*/
 
 // Defunct Parts And Things That Worked But Weren't What I Needed //
 /*
@@ -191,3 +244,4 @@ Originally, this selected an array of class items and edited their display prope
         };
     };
 */
+
