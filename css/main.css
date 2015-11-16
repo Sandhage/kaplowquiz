@@ -107,11 +107,12 @@ section {
 }
 .defuse-section .answer {
 	/* Layout and Design */
-	width: 10rem;
+	width: 15rem;
 	height: 1.5rem;
 	margin-top: 3rem;
 	margin-left: 6rem;
 	border-radius: 7px;
+	cursor: pointer;
 	/* Font and Color */
 	text-align: justify;
 }
