@@ -12,15 +12,20 @@ var currentQuestion = null;
     // Test for functionality, make local later (maybe?)
 var words  = ["spooky", "tired", "gnarly", "mystery", "brave"];
 var words2 = ["ghost", "archer", "mister", "monkey", "sick"];
-var words3 = ["devil", "arrow", "explosion", "proceed", "sleeps"];
+var words3 = ["speaks", "eats", "knows", "hates", "is"];
+var words4 = ["devil", "arrow", "explosion", "proceed", "sleep"];
     // Different Words
 var word1 = null;
 var word2 = null;
 var word3 = null;
+var word4 = null;
     // Phrase
-var passPhrase = null;
-    // Elements for class select and loop
-var elements = new Array();
+var passPhrase    = null;
+var liarPhrase1   = null;
+var liarPhrase2   = null;
+var liarPhrase3   = null;
+var deceitArray1  = null;
+var answerElement = new Array();
 
 // Application //
 function startTimer(duration, display) {
@@ -226,14 +231,43 @@ function resetDefusal() {
 
     // Set pass phrase
     setPhrase();
+    obfPhrase();
 
 }
 
 // Set All Defuse Hints
 function setHints() {
-    document.getElementById('hintCode').firstElementChild.innerHTML  = codeQuery.items;
-    document.getElementById('hintWire').firstElementChild.innerHTML  = wireQuery.items;
-    document.getElementById('hintPower').firstElementChild.innerHTML = powerQuery.items;
+    var tempWires  = ""; 
+
+    if ( !wireQuery.items[0] && !wireQuery.items[1] && !wireQuery.items[2] && !wireQuery.items[3]) {
+        tempWires = "no wires"
+    }
+
+    if ( wireQuery.items[0] ) {
+        tempWires = tempWires + " red";
+    }
+
+    if ( wireQuery.items[1] ) {
+        tempWires = tempWires + " green";
+    }
+
+    if ( wireQuery.items[2] ) {
+        tempWires = tempWires + " blue";
+    }
+
+    if ( wireQuery.items[3] ) {
+        tempWires = tempWires + " yellow";
+    }
+
+    if ( powerQuery.items ) {
+        document.getElementById('hintPower').firstElementChild.innerHTML  = "Should you remove the power source?   yes";
+    } else {
+        document.getElementById('hintPower').firstElementChild.innerHTML  = "Should you remove the power source?   no";
+    }
+
+    document.getElementById('hintCode').firstElementChild.innerHTML   = "The code is:   " + codeQuery.items;
+    document.getElementById('hintPhrase').firstElementChild.innerHTML = "The pass phrase is:   " + phraseQuery.items;
+    document.getElementById('hintWire').firstElementChild.innerHTML   = "You need to cut:   " + tempWires;
 }
 
 // Set Current Defusal Question
@@ -252,68 +286,99 @@ function setQuestion(queryObject) {
         // Yellow Wire
         document.getElementById('ans4').firstElementChild.innerHTML = 'Yellow';
         document.getElementById('ans4').style.color = '#ffff00';
+        // Show All Answer Divs
+        showAnswers();
     }
 
     if ( queryObject == codeQuery ) {
+        hideAnswers();
+
         document.getElementById('ans1').style.color   = '#7ee517';
         document.getElementById('ans3').style.color   = '#7ee517';
         document.getElementById('ans4').style.color   = '#7ee517';
-        hideAnswers();
+        
         document.getElementById('ans1').innerHTML     = '<input type="text" name="code-input" value="Enter Code Here" id="codeInput">';
         document.getElementById('ans1').style.display = 'block';
     }
 
     if ( queryObject == powerQuery ) {
+        hideAnswers();
+
         document.getElementById('ans1').innerHTML = '<p>yes</p>';
         document.getElementById('ans2').innerHTML = '<p>no</p>';
         document.getElementById('ans1').style.display = 'block';
         document.getElementById('ans2').style.display = 'block';
     }
 
-    // if (queryObject == phraseQuery) {
+    if (queryObject == phraseQuery) {
+        hideAnswers();
+        
+        answerElement = document.getElementsByClassName('answer');
+        var tempArray = [passPhrase, liarPhrase1, liarPhrase2, liarPhrase3];
 
-    // }
+        scramblePhrase(tempArray);
+
+        document.getElementById('ans1').innerHTML = '<p>' + tempArray[0] + '</p>';
+        document.getElementById('ans2').innerHTML = '<p>' + tempArray[1] + '</p>';
+        document.getElementById('ans3').innerHTML = '<p>' + tempArray[2] + '</p>';
+        document.getElementById('ans4').innerHTML = '<p>' + tempArray[3] + '</p>';
+
+        showAnswers();
+    }
 
 }
 
 
-// Pass Phrase Generator
+// Pass Phrase Generators
 
 // var words  = ["spooky", "tired", "gnarly", "mystery", "brave"];
 // var words2 = ["ghost", "archer", "mister", "monkey", "sick"];
 // var words3 = ["devil", "arrow", "explosion", "proceed", "sleeps"];
 function setPhrase() {
-    var getRandomPhrase = function () {
-        word1 = randomizeWord(words);
-        word2 = randomizeWord(words2);
-        word3 = randomizeWord(words3);
-        return word1 + " " + word2 + " " + word3;
-    };
+    passPhrase = getRandomPhrase();
+    
+    phraseArray = [word1, word2, word3, word4];
 
-    phrase = getRandomPhrase();
+    console.log(passPhrase);
+    console.log(phraseArray);
+}
+
+function getRandomPhrase() {
+    word1 = randomizeWord(words);
+    word2 = randomizeWord(words2);
+    word3 = randomizeWord(words3);
+    word4 = randomizeWord(words4);
+    return word1 + " " + word2 + " " + word3 + " " + word4;
 
     function randomizeWord(inputWords) {
         return inputWords[Math.floor(Math.random() * inputWords.length)];
     };
+};
 
-    console.log(passPhrase);
+function scramblePhrase(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
 }
 
-// Defunct Parts And Things That Worked But Weren't What I Needed //
-/*
-Originally, this selected an array of class items and edited their display properties through a loop:
-
-    var elements = new Array();
-
-    window.onload = function() {
-        elements = document.getElementsByClassName('hint');
-        ...
+function obfPhrase() {
+    while ( deceitArray1 == null ) {
+        deceitArray1 = scramblePhrase(phraseArray);
     }
 
-    function hideHints() {
-        for (var i = 0, max = elements.length; i < max; i++) {
-            elements[i].style.display = "none";
-        };
-    };
-*/
-
+    liarPhrase1 = deceitArray1[0] + " " + deceitArray1[1] + " " + deceitArray1[2] + " " + deceitArray1[3];
+    liarPhrase2 = getRandomPhrase();
+    liarPhrase3 = getRandomPhrase();
+}
