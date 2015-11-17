@@ -26,7 +26,7 @@ var liarPhrase1   = null;
 var liarPhrase2   = null;
 var liarPhrase3   = null;
 var deceitArray1  = null;
-var answerElement = new Array();
+// var answerElement = new Array();
 
 // Application //
 function startTimer(duration, display) {
@@ -50,17 +50,6 @@ function startTimer(duration, display) {
             setQuestion(codeQuery);
         }
 
-        if ( minutes == 12 && seconds == 0 ) {
-            setQuestion(powerQuery);
-        }
-
-        if ( minutes == 6 && seconds == 0 ) {
-            setQuestion(phraseQuery);
-        }
-
-        // if (minutes == 6 && seconds == 0) {
-        //     setQuestion();
-        // }
 
         if (--timer < 0) {
             alert("DONE"); 
@@ -82,7 +71,7 @@ window.onload = function() {
     setdefuseQueries();
 
     // Set All Defusal Hints
-    setHints();
+    showHints();
 
     // Set the timer for 30 Seconds
     var thirtySeconds = 60 * 30;
@@ -91,7 +80,7 @@ window.onload = function() {
     // Start timer and quiz
     document.querySelector('button').addEventListener('click', function () {
         startTimer(thirtySeconds, display);
-        showHints();
+        setHints();
     });
 
     // Test answers
@@ -116,6 +105,13 @@ window.onload = function() {
         console.log(clickedAnswer);
         checkAnswer(clickedAnswer);
     });
+    document.querySelector('#codeInput').addEventListener('keyup', function(e) {
+        if ( e.keyCode == 13 ) {
+            clickedAnswer = document.querySelector('#codeInput').value;
+            console.log(clickedAnswer);
+            checkAnswer(clickedAnswer);
+        }
+    });
 };
 
 // Logic to check each answer, based first on what type of question you're dealing with
@@ -124,18 +120,22 @@ function checkAnswer() {
 
     // }
 
-    // if ( currentQuestion  == codeQuery ) {
+    if ( currentQuestion == codeQuery ) {
+        if ( clickedAnswer == codeQuery.items ) {
+            // alert('Correct answer worked!');
+            codeQuery.answered++;
+            console.log(codeQuery.answered);
+            setQuestion(phraseQuery);
+        }
+    }
 
-    // }
-
-    if ( currentQuestion  == powerQuery ) {
+    if ( currentQuestion == powerQuery ) {
         if ( clickedAnswer == "yes" && powerQuery.items ) {
-            alert('Correct answer worked!');
+            // alert('Correct answer worked!');
             powerQuery.answered++;
             console.log(powerQuery.answered);
-            setQuestion(phraseQuery);
         } else if ( clickedAnswer == "no" && !powerQuery.items ) {
-            alert('Correct answer worked!');
+            // alert('Correct answer worked!');
             powerQuery.answered++;
             console.log(powerQuery.answered);
         } else {
@@ -143,13 +143,15 @@ function checkAnswer() {
         }
     } 
 
-    if ( currentQuestion  == phraseQuery ) {
+    if ( currentQuestion == phraseQuery ) {
         if ( clickedAnswer == passPhrase ) {
             alert('Correct answer worked!');
             phraseQuery.answered++;
             console.log(phraseQuery.answered);
+            setQuestion(powerQuery);
         } else {
             alert('Oof!');
+            setQuestion(powerQuery);
         }
     }
 }
@@ -168,6 +170,7 @@ function hideHints() {
 }
 
 function showQuestion() {
+    document.getElementById('ans5').style.display = 'none';
     document.getElementById('defuseSect').style.display = "block";
 }
 
@@ -176,9 +179,15 @@ function hideQuestion() {
 }
 
 function showAnswers() {
-    for (var i = 0, max = elements.length; i < max; i++) {
-        elements[i].style.display = "block";
-    };
+    // for (var i = 0, max = elements.length; i < max; i++) {
+    //     elements[i].style.display = "block";
+    // };
+
+    // Show all answer items excluding input-answer item 'ans5'
+    document.getElementById('ans1').style.display = 'block';
+    document.getElementById('ans2').style.display = 'block';
+    document.getElementById('ans3').style.display = 'block';
+    document.getElementById('ans4').style.display = 'block';
 }
 
 function hideAnswers() {
@@ -363,8 +372,7 @@ function setQuestion(queryObject) {
         document.getElementById('ans3').style.color   = '#7ee517';
         document.getElementById('ans4').style.color   = '#7ee517';
         
-        document.getElementById('ans1').innerHTML     = '<input type="text" name="code-input" value="Enter Code Here" id="codeInput">';
-        document.getElementById('ans1').style.display = 'block';
+        document.getElementById('ans5').style.display = 'block';
     }
 
     if ( queryObject == powerQuery ) {
@@ -385,7 +393,7 @@ function setQuestion(queryObject) {
 
         hideAnswers();
         
-        answerElement = document.getElementsByClassName('answer');
+        // answerElement = document.getElementsByClassName('answer');
         var tempArray = [passPhrase, liarPhrase1, liarPhrase2, liarPhrase3];
 
         scramblePhrase(tempArray);
