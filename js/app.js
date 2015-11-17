@@ -42,11 +42,7 @@ function startTimer(duration, display) {
 
         if ( minutes == 24 && seconds == 0 ) {
             hideHints();
-            setQuestion(wireQuery);
             showQuestion();
-        }
-
-        if ( minutes == 18 && seconds == 0 ) {
             setQuestion(codeQuery);
         }
 
@@ -77,8 +73,16 @@ window.onload = function() {
     var thirtySeconds = 60 * 30;
     display = document.querySelector('#timerDiv');
 
+    // Show instructions
+    // Set event listener to remove buttons
+    document.getElementById('instructions').style.display = 'block';
+        document.querySelector('#instructionButton').addEventListener('click', function () {
+        document.getElementById('instructions').style.display = 'none';
+    });
+
+
     // Start timer and quiz
-    document.querySelector('button').addEventListener('click', function () {
+    document.querySelector('#startQuiz').addEventListener('click', function () {
         startTimer(thirtySeconds, display);
         setHints();
     });

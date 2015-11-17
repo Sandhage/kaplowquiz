@@ -8,9 +8,19 @@
 	<script type="text/javascript" src="js/app.js"></script>
 </head>
 <body>
+	<section id="instructions">
+		<h2>Instructions</h2>
+		<ul>
+			<li>Press the GO! button to start the timer.</li>
+			<li>Hints will appear briefly giving you all of the correct answers.</li>
+			<li>After the hints disappeared, you will have 24 seconds to correctly answer all of the questions or... KAPLOW! You lose!</li>
+		</ul>
+		<button id="instructionButton">YUP GOT IT</button>
+	</section>
+
 	<section class="timer-section">
 		<div class="timer-container" id="timerDiv"></div>
-		<button>GO!</button>
+		<button id="startQuiz">GO!</button>
 	</section>
 
 	<section class="hint-section" id="hintSect">
