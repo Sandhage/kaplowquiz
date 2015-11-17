@@ -371,7 +371,7 @@ function setQuestion(queryObject) {
         console.log(currentQuestion);
 
         hideAnswers();
-
+        document.getElementById('codeInput').placeholder = "Enter Code and Press Enter";
         document.getElementById('ans1').style.color   = '#7ee517';
         document.getElementById('ans3').style.color   = '#7ee517';
         document.getElementById('ans4').style.color   = '#7ee517';

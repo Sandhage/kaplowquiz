@@ -19,15 +19,39 @@ section {
 	position: absolute;
 	z-index: 9999;
 	display: none;
-	margin-right: auto;
-	margin-left: auto;
+	left: 5rem;
 	min-width: 650px;
 	width: 90%;
 	height: 750px;
 	border-radius: 7px;
 	color: #7ee517;
 	background-color: #000000;
+	font-family: 'Iceberg', cursive;
 	border: 1px solid #1C1E21;
+}
+#instructions h2 {
+	text-align: center;
+}
+#instructions .listContainer {
+	width: 70%;
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+}
+#instructions ul {
+	padding: 0px;
+	list-style: none;
+}
+#instructions #buttonContainer{
+	position: relative;
+	margin-right: auto;
+	margin-left: auto;
+	width: 7.5rem;
+	height: 2.5rem;
+}
+#instructions button {
+	width: 7.5rem;
+	height: 2.5rem;
 }
 
 /* Timer Declarations */
