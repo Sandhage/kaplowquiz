@@ -9,6 +9,7 @@ var codeQuery       = null;
 var wireQuery       = null;
 var powerQuery      = null;
 var currentQuestion = null;
+var clickedAnswer   = null;
     // Test for functionality, make local later (maybe?)
 var words  = ["spooky", "tired", "gnarly", "mystery", "brave"];
 var words2 = ["ghost", "archer", "mister", "monkey", "sick"];
@@ -39,21 +40,21 @@ function startTimer(duration, display) {
 
         display.textContent = minutes + ":" + seconds;
 
-        if (minutes == 24 && seconds == 0) {
+        if ( minutes == 24 && seconds == 0 ) {
             hideHints();
             setQuestion(wireQuery);
             showQuestion();
         }
 
-        if (minutes == 18 && seconds == 0) {
+        if ( minutes == 18 && seconds == 0 ) {
             setQuestion(codeQuery);
         }
 
-        if (minutes == 12 && seconds == 0) {
+        if ( minutes == 12 && seconds == 0 ) {
             setQuestion(powerQuery);
         }
 
-        if (minutes == 6 && seconds == 0) {
+        if ( minutes == 6 && seconds == 0 ) {
             setQuestion(phraseQuery);
         }
 
@@ -62,7 +63,7 @@ function startTimer(duration, display) {
         // }
 
         if (--timer < 0) {
-        	alert("DONE"); 
+            alert("DONE"); 
            hideQuestion();
             timer = duration;
             clearInterval(interval);
@@ -92,7 +93,66 @@ window.onload = function() {
         startTimer(thirtySeconds, display);
         showHints();
     });
+
+    // Test answers
+    // Color, digits, yes, phrase
+    document.querySelector('#ans1').addEventListener('click', function() {
+        clickedAnswer = document.querySelector('#ans1').firstElementChild.innerHTML;
+        console.log(clickedAnswer);
+        checkAnswer(clickedAnswer);
+    });
+    document.querySelector('#ans2').addEventListener('click', function() {
+        clickedAnswer = document.querySelector('#ans2').firstElementChild.innerHTML;
+        console.log(clickedAnswer);
+        checkAnswer(clickedAnswer);
+    });
+    document.querySelector('#ans3').addEventListener('click', function() {
+        clickedAnswer = document.querySelector('#ans3').firstElementChild.innerHTML;
+        console.log(clickedAnswer);
+        checkAnswer(clickedAnswer);
+    });
+    document.querySelector('#ans4').addEventListener('click', function() {
+        clickedAnswer = document.querySelector('#ans4').firstElementChild.innerHTML;
+        console.log(clickedAnswer);
+        checkAnswer(clickedAnswer);
+    });
 };
+
+// Logic to check each answer, based first on what type of question you're dealing with
+function checkAnswer() {
+    // if ( currentQuestion  == wireQuery ) {
+
+    // }
+
+    // if ( currentQuestion  == codeQuery ) {
+
+    // }
+
+    if ( currentQuestion  == powerQuery ) {
+        if ( clickedAnswer == "yes" && powerQuery.items ) {
+            alert('Correct answer worked!');
+            powerQuery.answered++;
+            console.log(powerQuery.answered);
+            setQuestion(phraseQuery);
+        } else if ( clickedAnswer == "no" && !powerQuery.items ) {
+            alert('Correct answer worked!');
+            powerQuery.answered++;
+            console.log(powerQuery.answered);
+        } else {
+            alert('Gosh Darn!');
+        }
+    } 
+
+    if ( currentQuestion  == phraseQuery ) {
+        if ( clickedAnswer == passPhrase ) {
+            alert('Correct answer worked!');
+            phraseQuery.answered++;
+            console.log(phraseQuery.answered);
+        } else {
+            alert('Oof!');
+        }
+    }
+}
 
 
 
@@ -275,6 +335,9 @@ function setQuestion(queryObject) {
     document.getElementById('defuseSect').firstElementChild.innerHTML = queryObject.query;
     
     if ( queryObject == wireQuery ) {
+        currentQuestion = wireQuery;
+        console.log(currentQuestion);
+        
         // Red Wire
         document.getElementById('ans1').firstElementChild.innerHTML = 'Red';
         document.getElementById('ans1').style.color = '#E50000';
@@ -291,6 +354,9 @@ function setQuestion(queryObject) {
     }
 
     if ( queryObject == codeQuery ) {
+        currentQuestion = codeQuery;
+        console.log(currentQuestion);
+
         hideAnswers();
 
         document.getElementById('ans1').style.color   = '#7ee517';
@@ -302,6 +368,9 @@ function setQuestion(queryObject) {
     }
 
     if ( queryObject == powerQuery ) {
+        currentQuestion = powerQuery;
+        console.log(currentQuestion);
+
         hideAnswers();
 
         document.getElementById('ans1').innerHTML = '<p>yes</p>';
@@ -311,6 +380,9 @@ function setQuestion(queryObject) {
     }
 
     if (queryObject == phraseQuery) {
+        currentQuestion = phraseQuery;
+        console.log(currentQuestion);
+
         hideAnswers();
         
         answerElement = document.getElementsByClassName('answer');
