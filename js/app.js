@@ -120,9 +120,9 @@ window.onload = function() {
 
 // Logic to check each answer, based first on what type of question you're dealing with
 function checkAnswer() {
-    // if ( currentQuestion  == wireQuery ) {
+    // if ( currentQuestion == wireQuery ) {
 
-    // }
+    // } else 
 
     if ( currentQuestion == codeQuery ) {
         if ( clickedAnswer == codeQuery.items ) {
@@ -131,9 +131,7 @@ function checkAnswer() {
             console.log(codeQuery.answered);
             setQuestion(phraseQuery);
         }
-    }
-
-    if ( currentQuestion == powerQuery ) {
+    } else if ( currentQuestion == powerQuery ) {
         if ( clickedAnswer == "yes" && powerQuery.items ) {
             // alert('Correct answer worked!');
             powerQuery.answered++;
@@ -145,9 +143,7 @@ function checkAnswer() {
         } else {
             alert('Gosh Darn!');
         }
-    } 
-
-    if ( currentQuestion == phraseQuery ) {
+    } else if ( currentQuestion == phraseQuery ) {
         if ( clickedAnswer == passPhrase ) {
             alert('Correct answer worked!');
             phraseQuery.answered++;

@@ -155,3 +155,16 @@ section {
 	/* Font and Color */
 	text-align: justify;
 }
+.defuse-section #hiddenQuestions {
+	/* Layout and Design */
+	width: 15rem;
+	height: 1.5rem;
+	margin-top: 3rem;
+	margin-left: 6rem;
+	border-radius: 7px;
+	cursor: pointer;
+	/* Font and Color */
+	text-align: justify;
+	/* Hidden */
+	display: none;
+}
