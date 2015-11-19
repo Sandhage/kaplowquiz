@@ -130,6 +130,9 @@ function checkAnswer() {
             codeQuery.answered++;
             console.log(codeQuery.answered);
             setQuestion(phraseQuery);
+        } else {
+            alert('Consarnit!');
+            setQuestion(phraseQuery);
         }
     } else if ( currentQuestion == powerQuery ) {
         if ( clickedAnswer == "yes" && powerQuery.items ) {
