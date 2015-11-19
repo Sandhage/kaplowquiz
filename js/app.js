@@ -350,30 +350,21 @@ function setQuestion(queryObject) {
         currentQuestion = wireQuery;
         console.log(currentQuestion);
         
-        // Red Wire
-        document.getElementById('ans1').firstElementChild.innerHTML = 'Red';
-        document.getElementById('ans1').style.color = '#E50000';
-        // Green Wire
-        document.getElementById('ans2').firstElementChild.innerHTML = 'Green';
-        // Blue Wire
-        document.getElementById('ans3').firstElementChild.innerHTML = 'Blue';
-        document.getElementById('ans3').style.color = '#0BB5FF';
-        // Yellow Wire
-        document.getElementById('ans4').firstElementChild.innerHTML = 'Yellow';
-        document.getElementById('ans4').style.color = '#ffff00';
-        // Show All Answer Divs
-        showAnswers();
+        hideAnswers();
+
+        // Show wire divs
+        document.getElementById('hiddenWires').style.display = 'block';
+
     }
 
     if ( queryObject == codeQuery ) {
         currentQuestion = codeQuery;
         console.log(currentQuestion);
 
+        document.getElementById('hiddenWires').style.display = 'none';
         hideAnswers();
+        
         document.getElementById('codeInput').placeholder = "Enter Code and Press Enter";
-        document.getElementById('ans1').style.color   = '#7ee517';
-        document.getElementById('ans3').style.color   = '#7ee517';
-        document.getElementById('ans4').style.color   = '#7ee517';
         
         document.getElementById('ans5').style.display = 'block';
     }

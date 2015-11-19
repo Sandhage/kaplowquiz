@@ -155,16 +155,31 @@ section {
 	/* Font and Color */
 	text-align: justify;
 }
-.defuse-section #hiddenQuestions {
+.defuse-section #hiddenWires {
 	/* Layout and Design */
 	width: 15rem;
 	height: 1.5rem;
 	margin-top: 3rem;
-	margin-left: 6rem;
+	margin-left: 6.5rem;
 	border-radius: 7px;
 	cursor: pointer;
 	/* Font and Color */
 	text-align: justify;
 	/* Hidden */
 	display: none;
+}
+.defuse-section #hiddenWires .wires {
+	margin-bottom: 3rem;
+}
+.defuse-section #hiddenWires #wireAns1 {	
+	color: #E50000;
+}
+.defuse-section #hiddenWires #wireAns2 {	
+	color: #7ee517;
+}
+.defuse-section #hiddenWires #wireAns3 {	
+	color: #0BB5FF;
+}
+.defuse-section #hiddenWires #wireAns4 {	
+	color: #ffff00;
 }
