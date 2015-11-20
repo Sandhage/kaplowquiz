@@ -26,6 +26,14 @@ var liarPhrase1   = null;
 var liarPhrase2   = null;
 var liarPhrase3   = null;
 var deceitArray1  = null;
+    // More Wires
+var checkRed    = false;
+var checkGreen  = false;
+var checkBlue   = false;
+var checkYellow = false;
+    // Early Finish
+var timeCheck = false;
+
 // var answerElement = new Array();
 
 // Application //
@@ -43,15 +51,21 @@ function startTimer(duration, display) {
         if ( minutes == 24 && seconds == 0 ) {
             hideHints();
             showQuestion();
-            setQuestion(codeQuery);
+            setQuestion(wireQuery);
         }
 
-
-        if (--timer < 0) {
+        if ( timeCheck ) {
             alert("DONE"); 
-           hideQuestion();
+            hideAnswers();
             timer = duration;
             clearInterval(interval);
+            checkWin();
+        } else if ( --timer < 0 ) {
+            alert("DONE"); 
+            hideAnswers();
+            timer = duration;
+            clearInterval(interval);
+            checkWin();
         }
     }, 10);
 }
@@ -70,7 +84,7 @@ window.onload = function() {
     showHints();
 
     // Set the timer for 30 Seconds
-    var thirtySeconds = 60 * 30;
+    var thirtySeconds = 60 * 35;
     display = document.querySelector('#timerDiv');
 
     // Show instructions
@@ -92,37 +106,112 @@ window.onload = function() {
     document.querySelector('#ans1').addEventListener('click', function() {
         clickedAnswer = document.querySelector('#ans1').firstElementChild.innerHTML;
         console.log(clickedAnswer);
-        checkAnswer(clickedAnswer);
+        checkAnswer();
+
+        if ( clickedAnswer == "yes" ) {
+            timeCheck = true;
+        } else if ( clickedAnswer == "no" ) {
+            timeCheck = true;
+        }
     });
     document.querySelector('#ans2').addEventListener('click', function() {
         clickedAnswer = document.querySelector('#ans2').firstElementChild.innerHTML;
         console.log(clickedAnswer);
-        checkAnswer(clickedAnswer);
+        checkAnswer();
+       if ( clickedAnswer == "yes" ) {
+            timeCheck = true;
+        } else if ( clickedAnswer == "no" ) {
+            timeCheck = true;
+        }
     });
     document.querySelector('#ans3').addEventListener('click', function() {
         clickedAnswer = document.querySelector('#ans3').firstElementChild.innerHTML;
         console.log(clickedAnswer);
-        checkAnswer(clickedAnswer);
+        checkAnswer();
     });
     document.querySelector('#ans4').addEventListener('click', function() {
         clickedAnswer = document.querySelector('#ans4').firstElementChild.innerHTML;
         console.log(clickedAnswer);
-        checkAnswer(clickedAnswer);
     });
     document.querySelector('#codeInput').addEventListener('keyup', function(e) {
         if ( e.keyCode == 13 ) {
             clickedAnswer = document.querySelector('#codeInput').value;
             console.log(clickedAnswer);
-            checkAnswer(clickedAnswer);
+            checkAnswer();
         }
+    });
+    document.querySelector('#wireAns1').addEventListener('click', function() {
+        if ( checkRed == false ) {
+            checkRed = true;
+            document.getElementById('wireAns1').className += ' cut';
+        } else {
+            checkRed = false;
+            document.getElementById('wireAns1').className = 'wires';
+        }
+        console.log(clickedAnswer);
+    });
+    document.querySelector('#wireAns2').addEventListener('click', function() {
+        if ( checkGreen == false ) {
+            checkGreen = true;
+            document.getElementById('wireAns2').className += ' cut';
+        } else {
+            checkGreen = false;
+            document.getElementById('wireAns2').className = 'wires';
+        }
+        console.log(clickedAnswer);
+        
+    });
+    document.querySelector('#wireAns3').addEventListener('click', function() {
+        if ( checkBlue == false ) {
+            checkBlue = true;
+            document.getElementById('wireAns3').className += ' cut';
+        } else {
+            checkBlue = false;
+            document.getElementById('wireAns3').className = 'wires';
+        }
+        console.log(clickedAnswer);
+
+    });
+    document.querySelector('#wireAns4').addEventListener('click', function() {
+        if ( checkYellow == false ) {
+            checkYellow = true;
+            document.getElementById('wireAns4').className += ' cut';
+        } else {
+            checkYellow = false;
+            document.getElementById('wireAns4').className = 'wires';
+        }
+        console.log(clickedAnswer);
+    });
+    document.querySelector('#wireSubmit').addEventListener('click', function() {
+        checkAnswer();
     });
 };
 
 // Logic to check each answer, based first on what type of question you're dealing with
 function checkAnswer() {
-    // if ( currentQuestion == wireQuery ) {
+    if ( currentQuestion == wireQuery ) {
+        var correct = true;    
+        
+        if ( checkRed != cutRed ) {
+            correct = false;
+        } else if ( checkGreen != cutGreen ) {
+            correct = false;
+        } else if ( checkBlue != cutBlue ) {
+            correct = false;
+        } else if ( checkYellow != cutYellow ) {
+            correct = false;
+        }
 
-    // } else 
+        if ( correct ) {
+            wireQuery.answered++;
+            // alert('correct! +1');
+            setQuestion(codeQuery)
+        } else {
+            // alert('Woopsie!');
+            setQuestion(codeQuery)
+        }
+
+    } else 
 
     if ( currentQuestion == codeQuery ) {
         if ( clickedAnswer == codeQuery.items ) {
@@ -131,7 +220,7 @@ function checkAnswer() {
             console.log(codeQuery.answered);
             setQuestion(phraseQuery);
         } else {
-            alert('Consarnit!');
+            // alert('Consarnit!');
             setQuestion(phraseQuery);
         }
     } else if ( currentQuestion == powerQuery ) {
@@ -144,21 +233,36 @@ function checkAnswer() {
             powerQuery.answered++;
             console.log(powerQuery.answered);
         } else {
-            alert('Gosh Darn!');
+            // alert('Gosh Darn!');
         }
     } else if ( currentQuestion == phraseQuery ) {
         if ( clickedAnswer == passPhrase ) {
-            alert('Correct answer worked!');
+            // alert('Correct answer worked!');
             phraseQuery.answered++;
             console.log(phraseQuery.answered);
             setQuestion(powerQuery);
         } else {
-            alert('Oof!');
+            // alert('Oof!');
             setQuestion(powerQuery);
         }
     }
 }
 
+// Check Win Conditions
+function checkWin() {
+    var answerTotal = wireQuery.answered + codeQuery.answered + phraseQuery.answered + powerQuery.answered;
+    console.log(answerTotal);
+
+    if ( answerTotal == 4 ) {
+        document.getElementById('resultWin').firstElementChild.innerHTML = "You didn't explode! Holy cow, great job!"
+    } else {
+        document.getElementById('resultWin').firstElementChild.innerHTML = "Kaplow! You lose!"
+    }
+
+    hideQuestion();
+    showResults();
+
+}
 
 
 // Global Functions //
@@ -179,6 +283,14 @@ function showQuestion() {
 
 function hideQuestion() {
     document.getElementById('defuseSect').style.display = "none";
+}
+
+function showResults() {
+    document.getElementById('resultSect').style.display = "block";
+}
+
+function hideResults() {
+    document.getElementById('resultSect').style.display = "none";
 }
 
 function showAnswers() {
@@ -340,6 +452,11 @@ function setHints() {
     document.getElementById('hintCode').firstElementChild.innerHTML   = "The code is:   " + codeQuery.items;
     document.getElementById('hintPhrase').firstElementChild.innerHTML = "The pass phrase is:   " + phraseQuery.items;
     document.getElementById('hintWire').firstElementChild.innerHTML   = "You need to cut:   " + tempWires;
+
+    document.getElementById('hintWire').style.display = 'block';
+    document.getElementById('hintCode').style.display = 'block';
+    document.getElementById('hintPhrase').style.display = 'block';
+    document.getElementById('hintPower').style.display = 'block';
 }
 
 // Set Current Defusal Question

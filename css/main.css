@@ -113,7 +113,7 @@ section {
 	padding-right: 8rem;
 	padding-left: 8rem;
 }
-.hint {
+.hint-container .hint {
 	/* Layout and Design */
 	width: 10rem;
 	height: 8rem;
@@ -122,6 +122,8 @@ section {
 	/* Font and Color */
 	text-align: center;
 	background-color: #A4EC5C;
+	/* Hidden */
+	display: none;
 }
 
 /* Question Declarations */
@@ -182,4 +184,41 @@ section {
 }
 .defuse-section #hiddenWires #wireAns4 {	
 	color: #ffff00;
+}
+.defuse-section #hiddenWires .cut {
+	font-style: italic;
+	text-decoration: line-through;
+}
+
+/* Result Declarations */
+#resultSect {
+	/* Layout and Design */
+	width: 650px;
+	height: 400px;
+	margin-top: 3rem;
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 0.25rem;
+	border-radius: 7px;
+	/* Font and Color */
+	font-family: 'Iceland', cursive;
+	color: #7ee517;
+	background-color: #1C1E21;
+	/* Hidden */
+	display: none;
+}
+#resultSect h2 {
+	margin-left: 2rem;
+}
+#resultSect div {
+	min-width: 8rem;
+	width: 20%;
+	margin-right: auto;
+	margin-left: auto;
+}
+#resultSect #resultWin {
+	margin-top: 100px;
+}
+#resultSect #resetQuiz {
+	margin-top: 2rem;
 }
