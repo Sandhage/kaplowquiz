@@ -221,4 +221,5 @@ section {
 }
 #resultSect #resetQuiz {
 	margin-top: 2rem;
+	cursor: pointer;
 }

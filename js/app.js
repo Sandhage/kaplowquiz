@@ -49,6 +49,7 @@ function startTimer(duration, display) {
         display.textContent = minutes + ":" + seconds;
 
         if ( minutes == 24 && seconds == 0 ) {
+            hideHintDiv();
             hideHints();
             showQuestion();
             setQuestion(wireQuery);
@@ -99,6 +100,7 @@ window.onload = function() {
     document.querySelector('#startQuiz').addEventListener('click', function () {
         startTimer(thirtySeconds, display);
         setHints();
+        showHintDiv();
     });
 
     // Test answers
@@ -184,6 +186,9 @@ window.onload = function() {
     });
     document.querySelector('#wireSubmit').addEventListener('click', function() {
         checkAnswer();
+    });
+    document.querySelector('#resetQuiz').addEventListener('click', function() {
+        playAgain();
     });
 };
 
@@ -276,8 +281,22 @@ function hideHints() {
     document.getElementById('hintSect').style.display = "none";
 }
 
+function showHintDiv() {
+    document.getElementById('hintWire').style.display   = 'block';
+    document.getElementById('hintCode').style.display   = 'block';
+    document.getElementById('hintPhrase').style.display = 'block';
+    document.getElementById('hintPower').style.display  = 'block';
+}
+
+function hideHintDiv() {
+    document.getElementById('hintWire').style.display   = 'none';
+    document.getElementById('hintCode').style.display   = 'none';
+    document.getElementById('hintPhrase').style.display = 'none';
+    document.getElementById('hintPower').style.display  = 'none';
+}
+
 function showQuestion() {
-    document.getElementById('ans5').style.display = 'none';
+    document.getElementById('ans5').style.display       = 'none';
     document.getElementById('defuseSect').style.display = "block";
 }
 
@@ -419,6 +438,28 @@ function resetDefusal() {
 
 }
 
+// Play Again function
+function playAgain() {
+    timeCheck       = false;
+    currentQuestion = null;
+    clickedAnswer   = null;
+
+    hideResults();
+    showHints();
+
+    display.textContent = "00 : 00";
+
+    resetDefusal();
+
+    codeQuery.items = defuseCode;
+    wireQuery.items = [cutRed, cutGreen, cutBlue, cutYellow];
+    phraseQuery.items = passPhrase;
+    powerQuery.items = ejectPower;
+
+    setHints();
+
+}
+
 // Set All Defuse Hints
 function setHints() {
     var tempWires  = ""; 
@@ -453,10 +494,6 @@ function setHints() {
     document.getElementById('hintPhrase').firstElementChild.innerHTML = "The pass phrase is:   " + phraseQuery.items;
     document.getElementById('hintWire').firstElementChild.innerHTML   = "You need to cut:   " + tempWires;
 
-    document.getElementById('hintWire').style.display = 'block';
-    document.getElementById('hintCode').style.display = 'block';
-    document.getElementById('hintPhrase').style.display = 'block';
-    document.getElementById('hintPower').style.display = 'block';
 }
 
 // Set Current Defusal Question
@@ -521,10 +558,6 @@ function setQuestion(queryObject) {
 
 
 // Pass Phrase Generators
-
-// var words  = ["spooky", "tired", "gnarly", "mystery", "brave"];
-// var words2 = ["ghost", "archer", "mister", "monkey", "sick"];
-// var words3 = ["devil", "arrow", "explosion", "proceed", "sleeps"];
 function setPhrase() {
     passPhrase = getRandomPhrase();
     
