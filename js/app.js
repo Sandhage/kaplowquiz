@@ -447,7 +447,7 @@ function playAgain() {
     hideResults();
     showHints();
 
-    display.textContent = "00 : 00";
+    display.textContent = "00:00";
 
     resetDefusal();
 
