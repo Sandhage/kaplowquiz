@@ -8,6 +8,7 @@ var ejectPower      = false;
 var codeQuery       = null;
 var wireQuery       = null;
 var powerQuery      = null;
+var phraseQuery     = null;
 var currentQuestion = null;
 var clickedAnswer   = null;
     // Test for functionality, make local later (maybe?)
@@ -34,7 +35,6 @@ var checkYellow = false;
     // Early Finish
 var timeCheck = false;
 
-// var answerElement = new Array();
 
 // Application //
 function startTimer(duration, display) {
@@ -78,36 +78,33 @@ window.onload = function() {
     // Set all defusal variables (Code, Wire, Powersource)
     resetDefusal();
 
-    // Set the Question Objects
+    // Set the question objects
     setdefuseQueries();
 
-    // Set All Defusal Hints
+    // Set all defusal hints
     showHints();
 
-    // Set the timer for 30 Seconds
+    // Set the timer for 30 seconds
     var thirtySeconds = 60 * 35;
-    display = document.querySelector('#timerDiv');
+    display = document.querySelector('#timer-div');
 
-    // Show instructions
-    // Set event listener to remove buttons
+    // Show instructions & set event listener to remove buttons
     document.getElementById('instructions').style.display = 'block';
-        document.querySelector('#instructionButton').addEventListener('click', function () {
+        document.querySelector('#instruction-button').addEventListener('click', function () {
         document.getElementById('instructions').style.display = 'none';
     });
 
 
     // Start timer and quiz
-    document.querySelector('#startQuiz').addEventListener('click', function () {
+    document.querySelector('#start-quiz').addEventListener('click', function () {
         startTimer(thirtySeconds, display);
         setHints();
         showHintDiv();
     });
 
-    // Test answers
-    // Color, digits, yes, phrase
+    // Event listeners for answer-input
     document.querySelector('#ans1').addEventListener('click', function() {
         clickedAnswer = document.querySelector('#ans1').firstElementChild.innerHTML;
-        console.log(clickedAnswer);
         checkAnswer();
 
         if ( clickedAnswer == "yes" ) {
@@ -118,7 +115,6 @@ window.onload = function() {
     });
     document.querySelector('#ans2').addEventListener('click', function() {
         clickedAnswer = document.querySelector('#ans2').firstElementChild.innerHTML;
-        console.log(clickedAnswer);
         checkAnswer();
        if ( clickedAnswer == "yes" ) {
             timeCheck = true;
@@ -128,66 +124,57 @@ window.onload = function() {
     });
     document.querySelector('#ans3').addEventListener('click', function() {
         clickedAnswer = document.querySelector('#ans3').firstElementChild.innerHTML;
-        console.log(clickedAnswer);
         checkAnswer();
     });
     document.querySelector('#ans4').addEventListener('click', function() {
         clickedAnswer = document.querySelector('#ans4').firstElementChild.innerHTML;
-        console.log(clickedAnswer);
     });
-    document.querySelector('#codeInput').addEventListener('keyup', function(e) {
+    document.querySelector('#codeinput-id').addEventListener('keyup', function(e) {
         if ( e.keyCode == 13 ) {
-            clickedAnswer = document.querySelector('#codeInput').value;
-            console.log(clickedAnswer);
+            clickedAnswer = document.querySelector('#codeinput-id').value;
             checkAnswer();
         }
     });
-    document.querySelector('#wireAns1').addEventListener('click', function() {
+    document.querySelector('#wire-answer1').addEventListener('click', function() {
         if ( checkRed == false ) {
             checkRed = true;
-            document.getElementById('wireAns1').className += ' cut';
+            document.getElementById('wire-answer1').className += ' cut';
         } else {
             checkRed = false;
-            document.getElementById('wireAns1').className = 'wires';
+            document.getElementById('wire-answer1').className = 'wires';
         }
-        console.log(clickedAnswer);
     });
-    document.querySelector('#wireAns2').addEventListener('click', function() {
+    document.querySelector('#wire-answer2').addEventListener('click', function() {
         if ( checkGreen == false ) {
             checkGreen = true;
-            document.getElementById('wireAns2').className += ' cut';
+            document.getElementById('wire-answer2').className += ' cut';
         } else {
             checkGreen = false;
-            document.getElementById('wireAns2').className = 'wires';
+            document.getElementById('wire-answer2').className = 'wires';
         }
-        console.log(clickedAnswer);
-        
     });
-    document.querySelector('#wireAns3').addEventListener('click', function() {
+    document.querySelector('#wire-answer3').addEventListener('click', function() {
         if ( checkBlue == false ) {
             checkBlue = true;
-            document.getElementById('wireAns3').className += ' cut';
+            document.getElementById('wire-answer3').className += ' cut';
         } else {
             checkBlue = false;
-            document.getElementById('wireAns3').className = 'wires';
+            document.getElementById('wire-answer3').className = 'wires';
         }
-        console.log(clickedAnswer);
-
     });
-    document.querySelector('#wireAns4').addEventListener('click', function() {
+    document.querySelector('#wire-answer4').addEventListener('click', function() {
         if ( checkYellow == false ) {
             checkYellow = true;
-            document.getElementById('wireAns4').className += ' cut';
+            document.getElementById('wire-answer4').className += ' cut';
         } else {
             checkYellow = false;
-            document.getElementById('wireAns4').className = 'wires';
+            document.getElementById('wire-answer4').className = 'wires';
         }
-        console.log(clickedAnswer);
     });
-    document.querySelector('#wireSubmit').addEventListener('click', function() {
+    document.querySelector('#wire-submit').addEventListener('click', function() {
         checkAnswer();
     });
-    document.querySelector('#resetQuiz').addEventListener('click', function() {
+    document.querySelector('#reset-quiz').addEventListener('click', function() {
         playAgain();
     });
 };
@@ -222,7 +209,6 @@ function checkAnswer() {
         if ( clickedAnswer == codeQuery.items ) {
             // alert('Correct answer worked!');
             codeQuery.answered++;
-            console.log(codeQuery.answered);
             setQuestion(phraseQuery);
         } else {
             // alert('Consarnit!');
@@ -232,11 +218,9 @@ function checkAnswer() {
         if ( clickedAnswer == "yes" && powerQuery.items ) {
             // alert('Correct answer worked!');
             powerQuery.answered++;
-            console.log(powerQuery.answered);
         } else if ( clickedAnswer == "no" && !powerQuery.items ) {
             // alert('Correct answer worked!');
             powerQuery.answered++;
-            console.log(powerQuery.answered);
         } else {
             // alert('Gosh Darn!');
         }
@@ -244,7 +228,6 @@ function checkAnswer() {
         if ( clickedAnswer == passPhrase ) {
             // alert('Correct answer worked!');
             phraseQuery.answered++;
-            console.log(phraseQuery.answered);
             setQuestion(powerQuery);
         } else {
             // alert('Oof!');
@@ -253,15 +236,15 @@ function checkAnswer() {
     }
 }
 
-// Check Win Conditions
+// Check win conditions
 function checkWin() {
     var answerTotal = wireQuery.answered + codeQuery.answered + phraseQuery.answered + powerQuery.answered;
     console.log(answerTotal);
 
     if ( answerTotal == 4 ) {
-        document.getElementById('resultWin').firstElementChild.innerHTML = "You didn't explode! Holy cow, great job!"
+        document.getElementById('result-win').firstElementChild.innerHTML = "You didn't explode! Holy cow, great job!"
     } else {
-        document.getElementById('resultWin').firstElementChild.innerHTML = "Kaplow! You lose!"
+        document.getElementById('result-win').firstElementChild.innerHTML = "Kaplow! You lose!"
     }
 
     hideQuestion();
@@ -271,52 +254,47 @@ function checkWin() {
 
 
 // Global Functions //
-
 // Show/hide functions
 function showHints() {
-    document.getElementById('hintSect').style.display = "block";
+    document.getElementById('hintsect-id').style.display = "block";
 }
 
 function hideHints() {
-    document.getElementById('hintSect').style.display = "none";
+    document.getElementById('hintsect-id').style.display = "none";
 }
 
 function showHintDiv() {
-    document.getElementById('hintWire').style.display   = 'block';
-    document.getElementById('hintCode').style.display   = 'block';
-    document.getElementById('hintPhrase').style.display = 'block';
-    document.getElementById('hintPower').style.display  = 'block';
+    document.getElementById('hint-wire').style.display   = 'block';
+    document.getElementById('hint-code').style.display   = 'block';
+    document.getElementById('hint-phrase').style.display = 'block';
+    document.getElementById('hint-power').style.display  = 'block';
 }
 
 function hideHintDiv() {
-    document.getElementById('hintWire').style.display   = 'none';
-    document.getElementById('hintCode').style.display   = 'none';
-    document.getElementById('hintPhrase').style.display = 'none';
-    document.getElementById('hintPower').style.display  = 'none';
+    document.getElementById('hint-wire').style.display   = 'none';
+    document.getElementById('hint-code').style.display   = 'none';
+    document.getElementById('hint-phrase').style.display = 'none';
+    document.getElementById('hint-power').style.display  = 'none';
 }
 
 function showQuestion() {
     document.getElementById('ans5').style.display       = 'none';
-    document.getElementById('defuseSect').style.display = "block";
+    document.getElementById('defusesect-id').style.display = "block";
 }
 
 function hideQuestion() {
-    document.getElementById('defuseSect').style.display = "none";
+    document.getElementById('defusesect-id').style.display = "none";
 }
 
 function showResults() {
-    document.getElementById('resultSect').style.display = "block";
+    document.getElementById('resultsect-id').style.display = "block";
 }
 
 function hideResults() {
-    document.getElementById('resultSect').style.display = "none";
+    document.getElementById('resultsect-id').style.display = "none";
 }
 
 function showAnswers() {
-    // for (var i = 0, max = elements.length; i < max; i++) {
-    //     elements[i].style.display = "block";
-    // };
-
     // Show all answer items excluding input-answer item 'ans5'
     document.getElementById('ans1').style.display = 'block';
     document.getElementById('ans2').style.display = 'block';
@@ -344,7 +322,7 @@ function mkdefuseQuery(type, query, items) {
 
 }
 
-// Set All "defusalQuery" (AKA Question) objects
+// Set all "defusalQuery" (AKA Question) objects
 function setdefuseQueries() {
     codeQuery   = mkdefuseQuery("Four Digit Code", "What is the 4 digit code?", defuseCode);
         // console.log(codeQuery);
@@ -355,7 +333,7 @@ function setdefuseQueries() {
     phraseQuery = mkdefuseQuery("Pass Phrase", "Which is the correct pass phrase?", passPhrase);
 }
 
-// 4-digit Defusal Code Generator
+// 4-digit defusal code generator
 function setCode(min, max) {
     // Randomly generate a number between two digits ex: (0, 9999)
     defuseCode = Math.floor(Math.random()*(max-min+1)+min);
@@ -370,7 +348,7 @@ function setCode(min, max) {
     };
 }
 
-// Wire Boolean Value Generator
+// Wire boolean value generator
 function setWires() {
     // Set wire color variables, randomly generate values 0-1
     var tempRed    = randomSmallNum();
@@ -397,12 +375,9 @@ function setWires() {
     if (tempYellow) {
         cutYellow = true;
     }
-
-    // Check to make sure it's working!
-    // console.log(cutRed, cutGreen, cutBlue, cutYellow);
 }
 
-// Power Source Boolean Value Generator
+// Power source Boolean value generator
 function setPower() {
     // Set yes/no eject power variable
     var tempPower = randomSmallNum();
@@ -411,17 +386,14 @@ function setPower() {
     if (tempPower) {
         ejectPower = true;
     }
-
-    // Check to make sure it's working!
-    console.log(ejectPower);
 }
 
-// Small Number Generator
+// Small number generator
 function randomSmallNum() {
     return Math.floor(Math.random() * 2);
 }
 
-// Reset All Answer Variables
+// Reset all answer variables
 function resetDefusal() {
     // Set the 4-digit defusal code
     setCode(0, 9999);
@@ -435,10 +407,9 @@ function resetDefusal() {
     // Set pass phrase
     setPhrase();
     obfPhrase();
-
 }
 
-// Play Again function
+// Play again function
 function playAgain() {
     timeCheck       = false;
     currentQuestion = null;
@@ -457,10 +428,9 @@ function playAgain() {
     powerQuery.items = ejectPower;
 
     setHints();
-
 }
 
-// Set All Defuse Hints
+// Set all defuse hints
 function setHints() {
     var tempWires  = ""; 
 
@@ -485,47 +455,44 @@ function setHints() {
     }
 
     if ( powerQuery.items ) {
-        document.getElementById('hintPower').firstElementChild.innerHTML  = "Should you remove the power source?   yes";
+        document.getElementById('hint-power').firstElementChild.innerHTML  = "Should you remove the power source?   yes";
     } else {
-        document.getElementById('hintPower').firstElementChild.innerHTML  = "Should you remove the power source?   no";
+        document.getElementById('hint-power').firstElementChild.innerHTML  = "Should you remove the power source?   no";
     }
 
-    document.getElementById('hintCode').firstElementChild.innerHTML   = "The code is:   " + codeQuery.items;
-    document.getElementById('hintPhrase').firstElementChild.innerHTML = "The pass phrase is:   " + phraseQuery.items;
-    document.getElementById('hintWire').firstElementChild.innerHTML   = "You need to cut:   " + tempWires;
+    document.getElementById('hint-code').firstElementChild.innerHTML   = "The code is:   " + codeQuery.items;
+    document.getElementById('hint-phrase').firstElementChild.innerHTML = "The pass phrase is:   " + phraseQuery.items;
+    document.getElementById('hint-wire').firstElementChild.innerHTML   = "You need to cut:   " + tempWires;
 
 }
 
-// Set Current Defusal Question
+// Set current defusal question
 function setQuestion(queryObject) {
-    document.getElementById('defuseSect').firstElementChild.innerHTML = queryObject.query;
+    document.getElementById('defusesect-id').firstElementChild.innerHTML = queryObject.query;
     
     if ( queryObject == wireQuery ) {
         currentQuestion = wireQuery;
-        console.log(currentQuestion);
         
         hideAnswers();
 
         // Show wire divs
-        document.getElementById('hiddenWires').style.display = 'block';
+        document.getElementById('hidden-wires').style.display = 'block';
 
     }
 
     if ( queryObject == codeQuery ) {
         currentQuestion = codeQuery;
-        console.log(currentQuestion);
 
-        document.getElementById('hiddenWires').style.display = 'none';
+        document.getElementById('hidden-wires').style.display = 'none';
         hideAnswers();
         
-        document.getElementById('codeInput').placeholder = "Enter Code and Press Enter";
+        document.getElementById('codeinput-id').placeholder = "Enter Code and Press Enter";
         
         document.getElementById('ans5').style.display = 'block';
     }
 
     if ( queryObject == powerQuery ) {
         currentQuestion = powerQuery;
-        console.log(currentQuestion);
 
         hideAnswers();
 
@@ -537,7 +504,6 @@ function setQuestion(queryObject) {
 
     if (queryObject == phraseQuery) {
         currentQuestion = phraseQuery;
-        console.log(currentQuestion);
 
         hideAnswers();
         
@@ -562,9 +528,6 @@ function setPhrase() {
     passPhrase = getRandomPhrase();
     
     phraseArray = [word1, word2, word3, word4];
-
-    console.log(passPhrase);
-    console.log(phraseArray);
 }
 
 function getRandomPhrase() {
@@ -582,14 +545,14 @@ function getRandomPhrase() {
 function scramblePhrase(array) {
   var currentIndex = array.length, temporaryValue, randomIndex ;
 
-  // While there remain elements to shuffle...
+  // While there are remaining words to shuffle...
   while (0 !== currentIndex) {
 
-    // Pick a remaining element...
+    // Pick a remaining word...
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex -= 1;
 
-    // And swap it with the current element.
+    // And swap it with the current word.
     temporaryValue = array[currentIndex];
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;

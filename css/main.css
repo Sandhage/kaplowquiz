@@ -32,7 +32,7 @@ section {
 #instructions h2 {
 	text-align: center;
 }
-#instructions .listContainer {
+#instructions .list-container {
 	width: 70%;
 	position: relative;
 	margin-right: auto;
@@ -42,7 +42,7 @@ section {
 	padding: 0px;
 	list-style: none;
 }
-#instructions #buttonContainer{
+#instructions #button-container{
 	position: relative;
 	margin-right: auto;
 	margin-left: auto;
@@ -157,7 +157,7 @@ section {
 	/* Font and Color */
 	text-align: justify;
 }
-.defuse-section #hiddenWires {
+.defuse-section #hidden-wires {
 	/* Layout and Design */
 	width: 15rem;
 	height: 1.5rem;
@@ -170,28 +170,28 @@ section {
 	/* Hidden */
 	display: none;
 }
-.defuse-section #hiddenWires .wires {
+.defuse-section #hidden-wires .wires {
 	margin-bottom: 3rem;
 }
-.defuse-section #hiddenWires #wireAns1 {	
+.defuse-section #hidden-wires #wire-answer1 {	
 	color: #E50000;
 }
-.defuse-section #hiddenWires #wireAns2 {	
+.defuse-section #hidden-wires #wire-answer2 {	
 	color: #7ee517;
 }
-.defuse-section #hiddenWires #wireAns3 {	
+.defuse-section #hidden-wires #wire-answer3 {	
 	color: #0BB5FF;
 }
-.defuse-section #hiddenWires #wireAns4 {	
+.defuse-section #hidden-wires #wire-answer4 {	
 	color: #ffff00;
 }
-.defuse-section #hiddenWires .cut {
+.defuse-section #hidden-wires .cut {
 	font-style: italic;
 	text-decoration: line-through;
 }
 
 /* Result Declarations */
-#resultSect {
+#resultsect-id {
 	/* Layout and Design */
 	width: 650px;
 	height: 400px;
@@ -207,19 +207,19 @@ section {
 	/* Hidden */
 	display: none;
 }
-#resultSect h2 {
+#resultsect-id h2 {
 	margin-left: 2rem;
 }
-#resultSect div {
+#resultsect-id div {
 	min-width: 8rem;
 	width: 20%;
 	margin-right: auto;
 	margin-left: auto;
 }
-#resultSect #resultWin {
+#resultsect-id #result-win {
 	margin-top: 100px;
 }
-#resultSect #resetQuiz {
+#resultsect-id #reset-quiz {
 	margin-top: 2rem;
 	cursor: pointer;
 }

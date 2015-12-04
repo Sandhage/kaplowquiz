@@ -10,7 +10,7 @@
 <body>
 	<section id="instructions">
 		<h2>Instructions</h2>
-		<div class="listContainer">
+		<div class="list-container">
 			<ul>
 				<li>Press the GO! button to start the timer.</li>
 				<li>Hints will appear briefly giving you all of the correct answers to defuse the bomb!</li>
@@ -18,28 +18,28 @@
 				<li>For most of the questions, you just need to click on the correct answer; in the case of a text-box, just type the answer and press enter!</li>
 			</ul>
 		</div>
-		<div class="buttonContainer">
-			<button id="instructionButton">YUP GOT IT</button>
+		<div class="button-container">
+			<button id="instruction-button">YUP GOT IT</button>
 		</div>
 	</section>
 
 	<section class="timer-section">
-		<div class="timer-container" id="timerDiv"></div>
-		<button id="startQuiz">GO!</button>
+		<div class="timer-container" id="timer-div"></div>
+		<button id="start-quiz">GO!</button>
 	</section>
 
 <!-- refactor note: make sure class naming conventions are the same for all of em -->
 
-	<section class="hint-section" id="hintSect">
+	<section class="hint-section" id="hintsect-id">
 		<div class="hint-container">
-			<div class="hint" id="hintWire"><p></p></div>
-			<div class="hint" id="hintCode"><p></p></div>
-			<div class="hint" id="hintPhrase"><p></p></div>
-			<div class="hint" id="hintPower"><p></p></div>
+			<div class="hint" id="hint-wire"><p></p></div>
+			<div class="hint" id="hint-code"><p></p></div>
+			<div class="hint" id="hint-phrase"><p></p></div>
+			<div class="hint" id="hint-power"><p></p></div>
 		</div>
 	</section>
 	
-	<section class="defuse-section" id="defuseSect">
+	<section class="defuse-section" id="defusesect-id">
 		<h2></h2>
 			
 		<div class="answer" id="ans1">
@@ -58,22 +58,22 @@
 			<p></p>
 		</div>
 		<div class="answer" id="ans5">
-			<input type="text" name="code-input" id="codeInput">
+			<input type="text" name="code-input" id="codeinput-id">
 		</div>
 
-		<div id="hiddenWires">
-			<div class="wires" id="wireAns1">Red</div>
-			<div class="wires" id="wireAns2">Green</div>
-			<div class="wires" id="wireAns3">Blue</div>
-			<div class="wires" id="wireAns4">Yellow</div>
-			<div id="wireSubmit">Cut 'em.</div>
+		<div id="hidden-wires">
+			<div class="wires" id="wire-answer1">Red</div>
+			<div class="wires" id="wire-answer2">Green</div>
+			<div class="wires" id="wire-answer3">Blue</div>
+			<div class="wires" id="wire-answer4">Yellow</div>
+			<div id="wire-submit">Cut 'em.</div>
 		</div>
 	</section>
 
-	<section id="resultSect">
+	<section id="resultsect-id">
 		<h2>Results:</h2>
-		<div id="resultWin"><p></p></div>
-		<div id="resetQuiz"><p>Play again?</p></div>
+		<div id="result-win"><p></p></div>
+		<div id="reset-quiz"><p>Play again?</p></div>
 	</section>
 
 </body>
