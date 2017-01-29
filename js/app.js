@@ -1,10 +1,12 @@
 // Global Variables //
 var defuseCode      = null;
-var cutRed          = false; // For the boolean value questions, when making reset function
-var cutGreen        = false; // make sure to reset the variables to false.
-var cutBlue         = false;
-var cutYellow       = false;
-var ejectPower      = false;
+var cut = {
+	red: 		false,
+	blue: 	false,
+	green: 	false,
+	yellow: false
+}; 
+var ejectPower			= false;
 var codeQuery       = null;
 var wireQuery       = null;
 var powerQuery      = null;
@@ -12,10 +14,12 @@ var phraseQuery     = null;
 var currentQuestion = null;
 var clickedAnswer   = null;
     // Test for functionality, make local later (maybe?)
-var words  = ["spooky", "tired", "gnarly", "mystery", "brave"];
-var words2 = ["ghost", "archer", "mister", "monkey", "sick"];
-var words3 = ["speaks", "eats", "knows", "hates", "is"];
-var words4 = ["devil", "arrow", "explosion", "proceed", "sleep"];
+var words = {
+	pool1: ["spooky", "tired", "gnarly", "mystery", "brave"],
+	pool2: ["ghost", "archer", "mister", "monkey", "sick"],
+	pool3: ["speaks", "eats", "knows", "hates", "is"],
+	pool4: ["devil", "arrow", "explosion", "proceed", "sleep"]
+}
     // Different Words
 var word1 = null;
 var word2 = null;
@@ -184,13 +188,13 @@ function checkAnswer() {
     if ( currentQuestion == wireQuery ) {
         var correct = true;    
         
-        if ( checkRed != cutRed ) {
+        if ( checkRed != cut.red ) {
             correct = false;
-        } else if ( checkGreen != cutGreen ) {
+        } else if ( checkGreen != cut.green ) {
             correct = false;
-        } else if ( checkBlue != cutBlue ) {
+        } else if ( checkBlue != cut.blue ) {
             correct = false;
-        } else if ( checkYellow != cutYellow ) {
+        } else if ( checkYellow != cut.yellow ) {
             correct = false;
         }
 
@@ -326,7 +330,7 @@ function mkdefuseQuery(type, query, items) {
 function setdefuseQueries() {
     codeQuery   = mkdefuseQuery("Four Digit Code", "What is the 4 digit code?", defuseCode);
         // console.log(codeQuery);
-    wireQuery   = mkdefuseQuery("Wires", "Which wires do you need to cut?", [cutRed, cutGreen, cutBlue, cutYellow]);
+    wireQuery   = mkdefuseQuery("Wires", "Which wires do you need to cut?", [cut.red, cut.green, cut.blue, cut.yellow]);
         // console.log(wireQuery);
     powerQuery  = mkdefuseQuery("Power Source", "Do you need to remove the power source?", ejectPower);
         // console.log(powerQuery);
@@ -335,135 +339,116 @@ function setdefuseQueries() {
 
 // 4-digit defusal code generator
 function setCode(min, max) {
-    // Randomly generate a number between two digits ex: (0, 9999)
-    defuseCode = Math.floor(Math.random()*(max-min+1)+min);
+	// Randomly generate a number between two digits ex: (0, 9999)
+	defuseCode = Math.floor(Math.random()*(max-min+1)+min);
 
-    // Else if chain in case number is less than 4 digits long
-    if (defuseCode < 10) {
-        defuseCode = "000" + defuseCode;
-    } else if (defuseCode < 100) {
-        defuseCode = "00" + defuseCode;
-    } else if (defuseCode > 100 && defuseCode < 1000) {
-        defuseCode = "0" + defuseCode;
-    };
+	// Else if chain in case number is less than 4 digits long
+	if (defuseCode < 10) {
+			defuseCode = "000" + defuseCode;
+	} else if (defuseCode < 100) {
+			defuseCode = "00" + defuseCode;
+	} else if (defuseCode > 100 && defuseCode < 1000) {
+			defuseCode = "0" + defuseCode;
+	};
 }
 
 // Wire boolean value generator
 function setWires() {
-    // Set wire color variables, randomly generate values 0-1
-    var tempRed    = randomSmallNum();
-    var tempGreen  = randomSmallNum();
-    var tempBlue   = randomSmallNum();
-    var tempYellow = randomSmallNum();
+	var colors = {
+		red: 		0,
+		green:  0,
+		blue: 	0, 
+		yellow: 0
+	};
 
-    // Translate cutRed to Boolean
-    if (tempRed) {
-        cutRed = true;
-    }
-
-    // Translate cutGreen to Boolean
-    if (tempGreen) {
-        cutGreen = true;
-    }
-
-    // Translate cutBlue to Boolean
-    if (tempBlue) {
-        cutBlue = true;
-    }
-
-    // Translate cutYellow to Boolean
-    if (tempYellow) {
-        cutYellow = true;
-    }
+	for (var color in colors) {
+		colors[color] = randomSmallNum();
+		
+		if (colors[color]) {
+			cut[color] = true
+		}
+	}
 }
 
 // Power source Boolean value generator
 function setPower() {
-    // Set yes/no eject power variable
-    var tempPower = randomSmallNum();
+	// Set yes/no eject power variable
+	var tempPower = randomSmallNum();
 
-    // Translate ejectPower to Boolean
-    if (tempPower) {
-        ejectPower = true;
-    }
+	// Translate ejectPower to Boolean
+	if (tempPower) {
+			ejectPower = true;
+	}
 }
 
 // Small number generator
 function randomSmallNum() {
-    return Math.floor(Math.random() * 2);
+	return Math.floor(Math.random() * 2);
 }
 
 // Reset all answer variables
 function resetDefusal() {
-    // Set the 4-digit defusal code
-    setCode(0, 9999);
-
-    // Set wires
-    setWires();
-
-    // Set power source
-    setPower();
-
-    // Set pass phrase
-    setPhrase();
-    obfPhrase();
+	setCode(0, 9999);
+	setWires();
+	setPower();
+	setPhrase();
+	obfPhrase();
 }
 
 // Play again function
 function playAgain() {
-    timeCheck       = false;
-    currentQuestion = null;
-    clickedAnswer   = null;
+	timeCheck       = false;
+	currentQuestion = null;
+	clickedAnswer   = null;
 
-    hideResults();
-    showHints();
+	hideResults();
+	showHints();
 
-    display.textContent = "00:00";
+	display.textContent = "00:00";
 
-    resetDefusal();
+	resetDefusal();
 
-    codeQuery.items = defuseCode;
-    wireQuery.items = [cutRed, cutGreen, cutBlue, cutYellow];
-    phraseQuery.items = passPhrase;
-    powerQuery.items = ejectPower;
+	codeQuery.items 	= defuseCode;
+	wireQuery.items 	= [cut.red, cut.green, cut.blue, cut.yellow];
+	phraseQuery.items = passPhrase;
+	powerQuery.items  = ejectPower;
 
-    setHints();
+	setHints();
 }
 
 // Set all defuse hints
 function setHints() {
-    var tempWires  = ""; 
+	var tempWires  = ""; 
 
-    if ( !wireQuery.items[0] && !wireQuery.items[1] && !wireQuery.items[2] && !wireQuery.items[3]) {
-        tempWires = "no wires"
-    }
+	if ( !wireQuery.items[0] && !wireQuery.items[1] && !wireQuery.items[2] && !wireQuery.items[3]) {
+			tempWires = "no wires"
+	}
 
-    if ( wireQuery.items[0] ) {
-        tempWires = tempWires + " red";
-    }
+	if ( wireQuery.items[0] ) {
+			tempWires = tempWires + " red";
+	}
 
-    if ( wireQuery.items[1] ) {
-        tempWires = tempWires + " green";
-    }
+	if ( wireQuery.items[1] ) {
+			tempWires = tempWires + " green";
+	}
 
-    if ( wireQuery.items[2] ) {
-        tempWires = tempWires + " blue";
-    }
+	if ( wireQuery.items[2] ) {
+			tempWires = tempWires + " blue";
+	}
 
-    if ( wireQuery.items[3] ) {
-        tempWires = tempWires + " yellow";
-    }
+	if ( wireQuery.items[3] ) {
+			tempWires = tempWires + " yellow";
+	}
 
-    if ( powerQuery.items ) {
-        document.getElementById('hint-power').firstElementChild.innerHTML  = "Should you remove the power source?   yes";
-    } else {
-        document.getElementById('hint-power').firstElementChild.innerHTML  = "Should you remove the power source?   no";
-    }
+	if ( powerQuery.items ) {
+			document.getElementById('hint-power').firstElementChild.innerHTML  = "Should you remove the power source?   yes";
+	} else {
+			document.getElementById('hint-power').firstElementChild.innerHTML  = "Should you remove the power source?   no";
+	}
 
-    document.getElementById('hint-code').firstElementChild.innerHTML   = "The code is:   " + codeQuery.items;
-    document.getElementById('hint-phrase').firstElementChild.innerHTML = "The pass phrase is:   " + phraseQuery.items;
-    document.getElementById('hint-wire').firstElementChild.innerHTML   = "You need to cut:   " + tempWires;
-
+	document.getElementById('hint-code').firstElementChild.innerHTML   = "The code is:   " + codeQuery.items;
+	document.getElementById('hint-phrase').firstElementChild.innerHTML = "The pass phrase is:   " + phraseQuery.items;
+	document.getElementById('hint-wire').firstElementChild.innerHTML   = "You need to cut:   " + tempWires;
 }
 
 // Set current defusal question
@@ -512,10 +497,9 @@ function setQuestion(queryObject) {
 
         scramblePhrase(tempArray);
 
-        document.getElementById('ans1').innerHTML = '<p>' + tempArray[0] + '</p>';
-        document.getElementById('ans2').innerHTML = '<p>' + tempArray[1] + '</p>';
-        document.getElementById('ans3').innerHTML = '<p>' + tempArray[2] + '</p>';
-        document.getElementById('ans4').innerHTML = '<p>' + tempArray[3] + '</p>';
+				tempArray.forEach(function(phrase) {
+					document.getElementById('ans' + (tempArray.indexOf(phrase) + 1)).innerHTML = '<p>' + phrase + '</p>';
+				});
 
         showAnswers();
     }
@@ -531,10 +515,10 @@ function setPhrase() {
 }
 
 function getRandomPhrase() {
-    word1 = randomizeWord(words);
-    word2 = randomizeWord(words2);
-    word3 = randomizeWord(words3);
-    word4 = randomizeWord(words4);
+    word1 = randomizeWord(words.pool1);
+    word2 = randomizeWord(words.pool2);
+    word3 = randomizeWord(words.pool3);
+    word4 = randomizeWord(words.pool4);
     return word1 + " " + word2 + " " + word3 + " " + word4;
 
     function randomizeWord(inputWords) {
@@ -553,9 +537,9 @@ function scramblePhrase(array) {
     currentIndex -= 1;
 
     // And swap it with the current word.
-    temporaryValue = array[currentIndex];
+    temporaryValue 			= array[currentIndex];
     array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
+    array[randomIndex]  = temporaryValue;
   }
   return array;
 }
